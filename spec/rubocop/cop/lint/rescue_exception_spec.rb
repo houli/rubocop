@@ -122,4 +122,15 @@ RSpec.describe RuboCop::Cop::Lint::RescueException do
       end
     RUBY
   end
+
+  it 'does not register an offense for rescue with raise' do
+    expect_no_offenses(<<~RUBY)
+      begin
+        something
+      rescue Exception => e
+        other_method
+        Kernel.raise(e)
+      end
+    RUBY
+  end
 end
